@@ -37,17 +37,17 @@ jobs:
         include:
           - os: macos-latest
             TARGET: macos
-            CMD_BUILD: pyinstaller --noconfirm --onefile --console generate_nick.py
+            CMD_BUILD: pyinstaller --noconfirm --onefile --console -n minecraft_nick_generator-macos generate_nick.py
             OUT_FILE_NAME: minecraft_nick_generator-macos
             ASSET_MIME: application/octet-stream
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: pyinstaller --noconfirm --onefile --console generate_nick.py
+            CMD_BUILD: pyinstaller --noconfirm --onefile --console -n minecraft_nick_generator-windows generate_nick.py
             OUT_FILE_NAME: minecraft_nick_generator-windows.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
             TARGET: x86_64-linux-gnu
-            CMD_BUILD: pyinstaller --noconfirm --onefile --console generate_nick.py
+            CMD_BUILD: pyinstaller --noconfirm --onefile --console -n minecraft_nick_generator-linux generate_nick.py
             OUT_FILE_NAME: minecraft_nick_generator-linux
             ASSET_MIME: application/octet-stream
     steps:
