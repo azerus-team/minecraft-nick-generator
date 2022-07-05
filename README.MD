@@ -4,7 +4,7 @@ Generate tons of minecraft o.g names.
 ## Usage/Examples
 
 ```python
-generate_minecraft_nick(length=4, attempts=50)
+Generate_minecraft_nick(length=4, attempts=50)
 ```
 
 ## Screenshots
