@@ -6,6 +6,7 @@ from urllib.request import urlopen
 from typing import List
 
 class Generate_minecraft_nick():
+	json_name = "cache_nicks.json"
 	def __init__(self, length, attempts) -> List:
 		'''Generate O.G minecraft nicknames'''
 		# On Windows, calling init() will filter ANSI escape sequences out of any text sent to stdout or stderr, and replace 
@@ -14,7 +15,7 @@ class Generate_minecraft_nick():
 
 		self.__raise_errors(length)
 
-		self.cache_nicks = self.config_json("cache_nicks.json")
+		self.cache_nicks = self.config_json(self.json_name)
 		self.name_list = self.generate_nicks(attempts=attempts, length=length, check_json=self.cache_nicks)
 
 		self.attempts = attempts
@@ -36,10 +37,13 @@ class Generate_minecraft_nick():
 		for i in range(attempts):
 			name = stringtools.generate_nick(length=length)
 
-			# Checking if nickname is already cached
-			if name in self.cache_nicks:
-				print(f"Name: {name}, was already checked, and it's", check_json[name])
-			# If not, adding to name_list
+			# Checking if nickname is already cached, and if so repicking it
+			if name in check_json:
+				while name in check_json:
+					name = stringtools.generate_nick(length=length)
+				name_list.append(name)
+
+			# If it's not cached, adding to name_list
 			else:
 				name_list.append(name)
 		return name_list
@@ -61,9 +65,9 @@ class Generate_minecraft_nick():
 		elif length <= 2:
 			raise ValueError("The length of the nickname can't be less than 2 characters")
 	
-	def __write_to_json(self, name, _bool):
+	def __write_to_json(self, name, _bool, json_name):
 		self.cache_nicks[name] = _bool
-		json.dump(self.cache_nicks, open("cache_nicks.json", "w+"), indent=4, sort_keys=True)
+		json.dump(self.cache_nicks, open(json_name, "w+"), indent=4, sort_keys=True)
 
 	def request_api(self, names: List) -> List:
 		'''Returns available nicknames.'''
@@ -84,7 +88,7 @@ class Generate_minecraft_nick():
 				print(f"{colorama.Fore.LIGHTBLACK_EX + 'Name:'} {colorama.Fore.RED + name}")
 
 				# Caching the nickname
-				self.__write_to_json(name, False)
+				self.__write_to_json(name, False, self.json_name)
 			
 			# If there is nothing to store, than the nickname is available
 			except json.JSONDecodeError:
@@ -92,7 +96,7 @@ class Generate_minecraft_nick():
 				print(f"{colorama.Fore.LIGHTWHITE_EX + 'Name:'} {colorama.Fore.GREEN + name}")
 
 				# Caching the nickname
-				self.__write_to_json(name, True)
+				self.__write_to_json(name, True, self.json_name)
 
 		return valid_list
 
@@ -102,4 +106,3 @@ if __name__ == "__main__":
 	parser.add_argument('-a','--attempts', help='Choose how many attempts to find vaild nickname will be made, e.g: 600', required=True, type=int)
 	args = vars(parser.parse_args())
 	Generate_minecraft_nick(length=args["length"], attempts=args["attempts"])
-# Test
