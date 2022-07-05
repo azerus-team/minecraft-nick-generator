@@ -99,6 +99,6 @@ class Generate_minecraft_nick():
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='Generate minecraft o.g names. Creates json file, with nicknames, and their aviability.')
 	parser.add_argument('-l','--length', help='Choose the length of the nickname e.g: 4', required=True, type=int)
-	parser.add_argument('-a','--attempts', help='Choose how many nicks to check will be requested from api, e.g: 600', required=True, type=int)
+	parser.add_argument('-a','--attempts', help='Choose how many attempts to find vaild nickname will be made, e.g: 600', required=True, type=int)
 	args = vars(parser.parse_args())
 	Generate_minecraft_nick(length=args["length"], attempts=args["attempts"])
