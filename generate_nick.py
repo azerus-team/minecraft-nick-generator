@@ -65,4 +65,4 @@ def generate_minecraft_nick(length=4, attempts = 600) -> List:
 
 	return valid_list
 
-print(" ".join(generate_minecraft_nick(length=7, attempts=50)))
+print(" ".join(generate_minecraft_nick(length=4, attempts=50)))
