@@ -102,3 +102,4 @@ if __name__ == "__main__":
 	parser.add_argument('-a','--attempts', help='Choose how many attempts to find vaild nickname will be made, e.g: 600', required=True, type=int)
 	args = vars(parser.parse_args())
 	Generate_minecraft_nick(length=args["length"], attempts=args["attempts"])
+# Test
