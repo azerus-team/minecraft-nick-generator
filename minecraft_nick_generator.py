@@ -1,4 +1,4 @@
-import stringtools
+from stringtools.generators import Nick
 import colorama
 import json
 import argparse
@@ -31,16 +31,18 @@ class Generate_minecraft_nick():
 
 
 	def generate_nicks(self, attempts, length, check_json):
+
 		name_list = [] # Storing nicknames here
 
+		n = Nick()
+		n.set_length(length=length)
 		# Generating nicknames using stringtools
 		for i in range(attempts):
-			name = stringtools.generate_nick(length=length)
-
+			name = n.generate()
 			# Checking if nickname is already cached, and if so repicking it
 			if name in check_json:
 				while name in check_json:
-					name = stringtools.generate_nick(length=length)
+					name = n.generate()
 				name_list.append(name)
 
 			# If it's not cached, adding to name_list
@@ -69,7 +71,7 @@ class Generate_minecraft_nick():
 		self.cache_nicks[name] = _bool
 		json.dump(self.cache_nicks, open(json_name, "w+"), indent=4, sort_keys=True)
 
-	def request_api(self, names: List) -> List:
+	def request_api(self, names: List[str]) -> List:
 		'''Returns available nicknames.'''
 		# Requesting information from https://api.mojang.com/users/profiles/minecraft/name
 

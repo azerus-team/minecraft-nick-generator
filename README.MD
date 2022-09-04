@@ -7,7 +7,7 @@ Generate tons of minecraft o.g names.
 ## Installation / Usage
 Download the latest release, and run:
 - `minecraft_nick_generator-windows.exe -h` to get help
-arguments:
+##### arguments:
 - `-l` Choose the length of the nickname e.g: 4
 - `-a` Choose how many attempts to find vaild nickname will be made, e.g: 600
 
